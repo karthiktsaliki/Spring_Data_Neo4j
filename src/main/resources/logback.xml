@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+<property resource="application.properties" />
+
+<appender name="TIME_BASED_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.location}/neo4j-interface.log</file>
+   	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">    	
+     		<!-- daily rollover -->
+     		<fileNamePattern>${log.location}/neo4j-interface.%d{yyyy-MM-dd}.log</fileNamePattern>
+     		
+     		<maxHistory>30</maxHistory>
+   	</rollingPolicy>
+
+   	<encoder>
+     		<pattern>%d{MM-dd-yyyy HH:mm:ss.SSS} %-5p [%10.10t] [%X{user}]  %c{1}:%L - %m%n</pattern>
+   	</encoder>
+ 	</appender>	
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- Log message format -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+ 
+ 
+  <logger name="com.mroads.panna.neo4j" level="INFO">
+    <appender-ref ref="TIME_BASED_FILE" />
+  </logger>
+  
+  <logger name="com.mroads.panna.neo4j" level="INFO">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <!-- Setting the root level of logging to INFO -->
+ <!--  <root level="info">
+    <appender-ref ref="TIME_BASED_FILE" />
+  </root> -->
+   
+  
+</configuration>
